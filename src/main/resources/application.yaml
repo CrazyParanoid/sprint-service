@@ -1,0 +1,21 @@
+spring.profiles.active: develop
+spring.main.allow-bean-definition-overriding: true
+
+server.port: 8080
+
+spring:
+  application:
+    name: sprint-service
+  data:
+    mongodb:
+      database: ${DB_NAME}
+      uri: ${DB_URI}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
