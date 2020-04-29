@@ -33,7 +33,7 @@ public class SprintRepositoryImpl implements SprintRepository {
     public Sprint sprintOfId(SprintId sprintId) {
         try {
             return sprintDAO.findBySprintId(sprintId)
-                    .orElseThrow(() -> new SprintNotFoundException("Sprint is now found"));
+                    .orElseThrow(() -> new SprintNotFoundException("Sprint is not found"));
 
         } catch (MongoException ex){
             log.error(ex.getMessage());

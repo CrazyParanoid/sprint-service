@@ -1,9 +1,11 @@
 package ru.agiletech.sprint.service.domain;
 
+import ru.agiletech.sprint.service.domain.supertype.DomainEvent;
+
 import java.util.List;
 
-public interface DomainEventPublisher {
+public interface DomainEventPublisher<T extends DomainEvent> {
 
-    void publish(List<DomainEvent> domainEvents);
+    void publish(List<T> domainEvents);
 
 }

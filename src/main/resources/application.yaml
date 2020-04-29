@@ -6,6 +6,16 @@ server.port: 8080
 spring:
   application:
     name: sprint-service
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers:
+            - ${KAFKA_HOST_PORT}
+      bindings:
+        output:
+          destination: ${DESTINATION_CHANNEL}
+          content-type: application/json
   data:
     mongodb:
       database: ${DB_NAME}

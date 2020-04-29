@@ -3,14 +3,12 @@ package ru.agiletech.sprint.service.domain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import ru.agiletech.sprint.service.domain.supertype.ValueObject;
 
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter(value = AccessLevel.PACKAGE)
-@Setter(value = AccessLevel.PRIVATE)
+@Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SprintId implements ValueObject {
 

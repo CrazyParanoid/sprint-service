@@ -3,7 +3,6 @@ package ru.agiletech.sprint.service.domain.supertype;
 import lombok.Getter;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.annotation.Transient;
-import ru.agiletech.sprint.service.domain.DomainEvent;
 
 import java.util.ArrayList;
 import java.util.List;

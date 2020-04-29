@@ -17,9 +17,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SprintServiceImpl implements SprintService{
 
-    private final DomainEventPublisher  domainEventPublisher;
-    private final SprintRepository      sprintRepository;
-    private final SprintAssembler       sprintAssembler;
+    private final DomainEventPublisher<SprintScheduled>     sprintScheduledEventPublisher;
+    private final SprintRepository                          sprintRepository;
+    private final SprintAssembler                           sprintAssembler;
 
     @Override
     @Transactional
@@ -47,10 +47,7 @@ public class SprintServiceImpl implements SprintService{
         SprintId sprintId = SprintId.identifySprint(id);
         Sprint sprint = sprintRepository.sprintOfId(sprintId);
 
-        SprintStarted sprintStartedEvent = sprint.start(startDate,
-                endDate);
-
-        domainEventPublisher.publish(Collections.singletonList(sprintStartedEvent));
+        sprint.start(startDate, endDate);
         log.info("Sprint with id{} has been started", id);
 
         sprintRepository.save(sprint);
@@ -82,7 +79,8 @@ public class SprintServiceImpl implements SprintService{
 
         TaskId taskId = TaskId.identifyTaskFrom(rawTaskId);
 
-        sprint.schedule(taskId);
+        SprintScheduled event = sprint.schedule(taskId);
+        sprintScheduledEventPublisher.publish(Collections.singletonList(event));
 
         log.info("Sprint with id{} has been scheduled", sprint.sprintId());
 

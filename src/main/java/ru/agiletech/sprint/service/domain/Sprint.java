@@ -34,10 +34,9 @@ public class Sprint extends AggregateRoot {
         this.name       = name;
     }
 
-    public SprintStarted start(LocalDate startDate,
-                               LocalDate endDate){
-        if(this.status != Status.INACTIVE)
-            throw new UnsupportedOperationException("Wrong operation for current state");
+    public void start(LocalDate startDate,
+                      LocalDate endDate){
+        checkReadyForStart();
 
         if(Optional.ofNullable(startDate).isEmpty()
                 || Optional.ofNullable(endDate).isEmpty())
@@ -45,19 +44,30 @@ public class Sprint extends AggregateRoot {
 
         this.period = SprintPeriod.between(startDate, endDate);
         this.status = Status.ACTIVE;
-
-        String eventName = SprintStarted.class.getName();
-
-        return new SprintStarted(new Date(),
-                eventName,
-                this.sprintId);
     }
 
-    public void schedule(TaskId taskId){
+    private void checkReadyForStart(){
+        if(this.status != Status.INACTIVE)
+            throw new UnsupportedOperationException("Невозможно начать спринт. " +
+                    "Возможно спринт уже был взят в работу");
+
+        if(CollectionUtils.isEmpty(this.tasks))
+            throw new UnsupportedOperationException("Невозможно начать спринт. " +
+                    "Отсутствуют запланированные задачи");
+    }
+
+    public SprintScheduled schedule(TaskId taskId){
         if(this.status == Status.COMPLETE)
-            throw new UnsupportedOperationException("Wrong operation for current state");
+            throw new UnsupportedOperationException("Невозможно спланировать завершенный спринт.");
 
         this.tasks.add(taskId);
+
+        String eventName = SprintScheduled.class.getName();
+
+        return new SprintScheduled(new Date(),
+                eventName,
+                this.sprintId,
+                taskId);
     }
 
     public long daysOfSprint(){
@@ -82,6 +92,9 @@ public class Sprint extends AggregateRoot {
     }
 
     public void complete(){
+        if(status != Status.ACTIVE)
+            throw new UnsupportedOperationException("Невозможно завершить спринт.");
+
         this.status = Status.COMPLETE;
     }
 

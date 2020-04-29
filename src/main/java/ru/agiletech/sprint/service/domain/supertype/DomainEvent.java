@@ -1,4 +1,4 @@
-package ru.agiletech.sprint.service.domain;
+package ru.agiletech.sprint.service.domain.supertype;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,13 +1,14 @@
-package ru.agiletech.sprint.service.presentation;
+package ru.agiletech.sprint.service.presentation.hateoas;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import ru.agiletech.sprint.service.application.SprintDTO;
+import ru.agiletech.sprint.service.presentation.SprintResource;
 
 @UtilityClass
 public class LinksUtil {
 
-    void addLinks(SprintDTO sprintDTO){
+    public void addLinks(SprintDTO sprintDTO){
         addSelfLink(sprintDTO);
         addAllSprintsLink(sprintDTO);
         addCompleteLink(sprintDTO);

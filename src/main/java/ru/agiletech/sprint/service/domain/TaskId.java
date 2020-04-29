@@ -8,7 +8,7 @@ import ru.agiletech.sprint.service.domain.supertype.ValueObject;
 
 import java.util.Objects;
 
-@Getter(value = AccessLevel.PACKAGE)
+@Getter
 @Setter(value = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TaskId implements ValueObject {
