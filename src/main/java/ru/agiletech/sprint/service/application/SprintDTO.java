@@ -19,11 +19,11 @@ import java.util.Set;
 @ApiModel(description = "Представление модели спринта")
 public class SprintDTO extends RepresentationModel<SprintDTO> {
 
-    @NotEmpty
+    @NotEmpty(message = "Отсутствует наименование спринта")
     @ApiModelProperty(required = true, value = "Наименование")
     private String      name;
 
-    @NotEmpty
+    @NotEmpty(message = "Отсутствует цель спринта")
     @ApiModelProperty(position = 1, required = true, value = "Цель")
     private String      goal;
 
