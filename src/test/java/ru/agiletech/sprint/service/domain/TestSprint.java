@@ -47,6 +47,11 @@ public class TestSprint {
     public void testStartSprint(){
         this.sprint = createSprint();
 
+        String rawTaskId = UUID.randomUUID().toString();
+
+        TaskId taskId = TaskId.identifyTaskFrom(rawTaskId);
+        sprint.schedule(taskId);
+
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusWeeks(2);
 
@@ -57,7 +62,8 @@ public class TestSprint {
 
     private Sprint createSprint(){
         return Sprint.create("AgileTech 0 Sprint",
-                "The goal of sprint is to develop mvp sprint service");
+                "The goal of sprint is to develop mvp sprint service",
+                "TST");
     }
 
 }

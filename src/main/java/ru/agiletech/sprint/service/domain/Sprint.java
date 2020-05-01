@@ -17,17 +17,20 @@ public class Sprint extends AggregateRoot {
 
     private SprintId        sprintId;
     private SprintPeriod    period;
+    private Project         project;
     private String          name;
     private String          goal;
     private Status          status;
     private Set<TaskId>     tasks;
 
     private Sprint(SprintId     sprintId,
+                   Project      project,
                    String       goal,
                    Set<TaskId>  tasks,
                    String       name,
                    Status       status) {
         this.sprintId   = sprintId;
+        this.project    = project;
         this.goal       = goal;
         this.tasks      = tasks;
         this.status     = status;
@@ -118,10 +121,13 @@ public class Sprint extends AggregateRoot {
     }
 
     public static Sprint create(String          name,
-                                String          goal){
+                                String          goal,
+                                String          projectKey){
         SprintId sprintId = SprintId.identifySprint();
+        Project project = Project.createFrom(projectKey);
 
         return new Sprint(sprintId,
+                project,
                 goal,
                 new HashSet<>(),
                 name,

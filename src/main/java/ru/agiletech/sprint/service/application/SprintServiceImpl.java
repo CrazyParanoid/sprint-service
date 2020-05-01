@@ -26,7 +26,8 @@ public class SprintServiceImpl implements SprintService{
     public SprintDTO createSprint(SprintDTO sprintDTO) {
         log.info("Create sprint");
         Sprint sprint = Sprint.create(sprintDTO.getName(),
-                sprintDTO.getGoal());
+                sprintDTO.getGoal(),
+                sprintDTO.getProjectKey());
 
         String id = sprint.sprintId();
 

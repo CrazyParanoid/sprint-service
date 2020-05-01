@@ -27,22 +27,26 @@ public class SprintDTO extends RepresentationModel<SprintDTO> {
     @ApiModelProperty(position = 1, required = true, value = "Цель")
     private String      goal;
 
-    @ApiModelProperty(position = 2, value = "Идентификатор", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @NotEmpty(message = "Отсутствует ключ проекта")
+    @ApiModelProperty(position = 2, required = true, value = "Ключ проекта")
+    private String      projectKey;
+
+    @ApiModelProperty(position = 3, value = "Идентификатор", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private String      id;
 
-    @ApiModelProperty(position = 3, value = "Статус", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(position = 4, value = "Статус", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private String      status;
 
-    @ApiModelProperty(position = 4, value = "Список задач в спринте", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(position = 5, value = "Список задач в спринте", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private Set<String> tasks;
 
-    @ApiModelProperty(position = 5, value = "Количество дней в спринте", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(position = 6, value = "Количество дней в спринте", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private long        sprintDays;
 
-    @ApiModelProperty(position = 6, value = "Дата начала спринта", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(position = 7, value = "Дата начала спринта", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private LocalDate   startDate;
 
-    @ApiModelProperty(position = 7, value = "Дата окончания спринта", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(position = 8, value = "Дата окончания спринта", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private LocalDate   endDate;
 
 }
