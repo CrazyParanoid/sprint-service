@@ -1,21 +1,22 @@
-package ru.agiletech.sprint.service.domain;
+package ru.agiletech.sprint.service.domain.task;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.agiletech.sprint.service.domain.supertype.ValueObject;
 
 import java.util.Objects;
 
-@Getter(value = AccessLevel.PACKAGE)
+@Getter
 @Setter(value = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Project {
+public class TaskId implements ValueObject {
 
-    private String key;
+    private String id;
 
-    static Project createFrom(String projectKey){
-        return new Project(projectKey);
+    public static TaskId identifyTaskFrom(String id){
+        return new TaskId(id);
     }
 
     @Override
@@ -26,15 +27,15 @@ public class Project {
                 || getClass() != object.getClass())
             return false;
 
-        Project project = (Project) object;
+        TaskId taskId = (TaskId) object;
 
-        return Objects.equals(key,
-                project.key);
+        return Objects.equals(id,
+                taskId.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(key);
+        return Objects.hash(id);
     }
 
 }

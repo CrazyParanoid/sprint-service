@@ -2,6 +2,7 @@ package ru.agiletech.sprint.service.domain;
 
 import lombok.Getter;
 import ru.agiletech.sprint.service.domain.supertype.DomainEvent;
+import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
 public class SprintScheduled extends DomainEvent {
 
     private SprintId sprintId;
-    private TaskId   taskId;
+    private TaskId taskId;
 
     public SprintScheduled(Date     occurredOn,
                            String   name,

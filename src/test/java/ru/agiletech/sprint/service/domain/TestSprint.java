@@ -8,6 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.agiletech.sprint.service.Application;
+import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -27,8 +28,10 @@ public class TestSprint {
      public void testCreateSprint(){
          this.sprint = createSprint();
 
+         SprintSnapshot snapshot = sprint.makeSnapshot();
+
          assertNotNull(sprint.sprintId());
-         assertNotNull(sprint.status());
+         assertNotNull(snapshot.getStatus());
      }
 
     @Test
@@ -40,7 +43,9 @@ public class TestSprint {
         TaskId taskId = TaskId.identifyTaskFrom(rawTaskId);
         sprint.schedule(taskId);
 
-        assertNotNull(sprint.tasks());
+        SprintSnapshot snapshot = sprint.makeSnapshot();
+
+        assertNotNull(snapshot.getTasks());
     }
 
     @Test
@@ -57,7 +62,9 @@ public class TestSprint {
 
         sprint.start(startDate, endDate);
 
-        assertNotNull(sprint.status());
+        SprintSnapshot snapshot = sprint.makeSnapshot();
+
+        assertNotNull(snapshot.getStatus());
     }
 
     private Sprint createSprint(){

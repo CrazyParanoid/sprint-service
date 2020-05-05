@@ -27,6 +27,8 @@
         <appender-ref ref="FILE" />
     </root>
 
+    <logger name="org.apache.kafka.clients.NetworkClient" level="OFF" />
+
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 
 </configuration>

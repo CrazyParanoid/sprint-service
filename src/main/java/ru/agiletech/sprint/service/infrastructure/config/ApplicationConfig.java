@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.slf4j.MDC;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Configuration
+@EnableDiscoveryClient
 @EnableBinding(Source.class)
 public class ApplicationConfig implements WebMvcConfigurer {
 

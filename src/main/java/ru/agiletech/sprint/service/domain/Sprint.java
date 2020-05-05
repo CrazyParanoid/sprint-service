@@ -3,7 +3,9 @@ package ru.agiletech.sprint.service.domain;
 import lombok.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.mongodb.core.mapping.Document;
+import ru.agiletech.sprint.service.domain.project.Project;
 import ru.agiletech.sprint.service.domain.supertype.AggregateRoot;
+import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.time.LocalDate;;
 import java.util.*;
@@ -73,27 +75,6 @@ public class Sprint extends AggregateRoot {
                 taskId);
     }
 
-    public long daysOfSprint(){
-        if(status == Status.ACTIVE)
-            return this.period.calculateDays();
-
-        return SprintPeriod.ZERO_DAYS;
-    }
-
-    public LocalDate startDateOfSprint(){
-        if(status == Status.ACTIVE)
-            return this.period.getStartDate();
-
-        return SprintPeriod.EMPTY_DATE;
-    }
-
-    public LocalDate endDateOfSprint(){
-        if(status == Status.ACTIVE)
-            return this.period.getEndDate();
-
-        return SprintPeriod.EMPTY_DATE;
-    }
-
     public void complete(){
         if(status != Status.ACTIVE)
             throw new UnsupportedOperationException("Невозможно завершить спринт.");
@@ -101,23 +82,14 @@ public class Sprint extends AggregateRoot {
         this.status = Status.COMPLETE;
     }
 
-    public String status(){
-        return this.status.getValue();
-    }
-
-    public Set<String> tasks(){
-        if(CollectionUtils.isNotEmpty(this.tasks)){
-            Set<String> tasks = new HashSet<>();
-            this.tasks.forEach(task -> tasks.add(task.getId()));
-
-            return tasks;
-        }
-
-        return Collections.emptySet();
-    }
-
     public String sprintId(){
         return this.sprintId.getId();
+    }
+
+    public SprintSnapshot makeSnapshot(){
+        return new SprintSnapshot(this.period,
+                this.status,
+                this.tasks);
     }
 
     public static Sprint create(String          name,
@@ -159,7 +131,7 @@ public class Sprint extends AggregateRoot {
         ACTIVE("ACTIVE"),
         COMPLETE("COMPLETE");
 
-        @Getter(value = AccessLevel.PRIVATE)
+        @Getter
         private final String value;
     }
 

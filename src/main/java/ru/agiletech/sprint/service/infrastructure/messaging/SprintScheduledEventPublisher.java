@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.agiletech.sprint.service.domain.DomainEventPublisher;
 import ru.agiletech.sprint.service.domain.SprintId;
 import ru.agiletech.sprint.service.domain.SprintScheduled;
-import ru.agiletech.sprint.service.domain.TaskId;
+import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.util.HashMap;
 import java.util.List;

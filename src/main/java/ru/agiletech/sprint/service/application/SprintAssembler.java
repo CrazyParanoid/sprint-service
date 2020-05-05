@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import ru.agiletech.sprint.service.domain.Sprint;
+import ru.agiletech.sprint.service.domain.SprintSnapshot;
 
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -16,16 +16,16 @@ public class SprintAssembler {
     SprintDTO writeDTO(Sprint sprint){
         var sprintDTO = modelMapper.map(sprint, SprintDTO.class);
 
-        Set<String> tasks = sprint.tasks();
-        var status = sprint.status();
         var id = sprint.sprintId();
 
+        SprintSnapshot snapshot = sprint.makeSnapshot();
+
         sprintDTO.setId(id);
-        sprintDTO.setStatus(status);
-        sprintDTO.setTasks(tasks);
-        sprintDTO.setSprintDays(sprint.daysOfSprint());
-        sprintDTO.setStartDate(sprint.startDateOfSprint());
-        sprintDTO.setEndDate(sprint.endDateOfSprint());
+        sprintDTO.setStatus(snapshot.getStatus());
+        sprintDTO.setTasks(snapshot.getTasks());
+        sprintDTO.setSprintDays(snapshot.daysOfSprint());
+        sprintDTO.setStartDate(snapshot.getStartDateOfSprint());
+        sprintDTO.setEndDate(snapshot.getEndDateOfSprint());
 
         return sprintDTO;
     }

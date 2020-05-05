@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.agiletech.sprint.service.domain.*;
+import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.time.LocalDate;
 import java.util.Collections;
