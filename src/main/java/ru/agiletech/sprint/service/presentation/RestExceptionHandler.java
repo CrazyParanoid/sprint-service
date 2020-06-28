@@ -8,7 +8,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.agiletech.sprint.service.infrastructure.messaging.MessagePublishingException;
+import ru.agiletech.sprint.service.infrastructure.events.MessagePublishingException;
 import ru.agiletech.sprint.service.infrastructure.persistence.RepositoryAccessException;
 import ru.agiletech.sprint.service.infrastructure.persistence.SprintNotFoundException;
 
@@ -22,41 +22,32 @@ public class RestExceptionHandler {
     private ResponseEntity<String> catchValidationException(MethodArgumentNotValidException ex){
         BindingResult bindingResult = ex.getBindingResult();
         List<ObjectError> errors =  bindingResult.getAllErrors();
-
         StringBuilder reason = new StringBuilder();
 
-        errors.forEach(error -> reason.append(error.getDefaultMessage())
-                .append(";"));
-
+        errors.forEach(error -> reason.append(error.getDefaultMessage()).append(";"));
         log.error(reason.toString());
 
-        return new ResponseEntity<>(reason.toString(),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(reason.toString(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     private ResponseEntity<String> catchIllegalArgumentException(IllegalArgumentException ex){
-        return new ResponseEntity<>(ex.getMessage(),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({RepositoryAccessException.class,
-            MessagePublishingException.class})
+    @ExceptionHandler({RepositoryAccessException.class, MessagePublishingException.class})
     private ResponseEntity<String> catchInfrastructureExceptions(RuntimeException ex){
-        return new ResponseEntity<>(ex.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(SprintNotFoundException.class)
     private ResponseEntity<String> catchNotFoundException(SprintNotFoundException ex){
-        return new ResponseEntity<>(ex.getMessage(),
-                HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UnsupportedOperationException.class)
     private ResponseEntity<String> catchUnsupportedOperationException(UnsupportedOperationException ex){
-        return new ResponseEntity<>(ex.getMessage(),
-                HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -3,6 +3,7 @@ package ru.agiletech.sprint.service.domain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
+import ru.agiletech.sprint.service.domain.supertype.ValueObject;
 import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.time.LocalDate;
@@ -13,11 +14,11 @@ import java.util.Set;
 import static ru.agiletech.sprint.service.domain.Sprint.*;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class SprintSnapshot {
+public class SprintSnapshot implements ValueObject {
 
-    private final SprintPeriod  period;
-    private final Status        status;
-    private final Set<TaskId>   tasks;
+    private final SprintPeriod period;
+    private final Status status;
+    private final Set<TaskId> tasks;
 
     public String getStatus(){
         return this.status.getValue();
@@ -26,7 +27,6 @@ public class SprintSnapshot {
     public long daysOfSprint(){
         if(status == Status.ACTIVE)
             return this.period.calculateDays();
-
         return SprintPeriod.ZERO_DAYS;
     }
 
@@ -37,21 +37,18 @@ public class SprintSnapshot {
 
             return tasks;
         }
-
         return Collections.emptySet();
     }
 
     public LocalDate getStartDateOfSprint(){
         if(status == Status.ACTIVE)
             return this.period.getStartDate();
-
         return SprintPeriod.EMPTY_DATE;
     }
 
     public LocalDate getEndDateOfSprint(){
         if(status == Status.ACTIVE)
             return this.period.getEndDate();
-
         return SprintPeriod.EMPTY_DATE;
     }
 

@@ -3,6 +3,7 @@ package ru.agiletech.sprint.service.application;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import ru.agiletech.sprint.service.application.dto.SprintDTO;
 import ru.agiletech.sprint.service.domain.Sprint;
 import ru.agiletech.sprint.service.domain.SprintSnapshot;
 
@@ -15,7 +16,6 @@ public class SprintAssembler {
 
     SprintDTO writeDTO(Sprint sprint){
         var sprintDTO = modelMapper.map(sprint, SprintDTO.class);
-
         var id = sprint.sprintId();
 
         SprintSnapshot snapshot = sprint.makeSnapshot();

@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class DomainEvent {
 
-    private Date    occurredOn;
-    private String  name;
+    private Date occurredOn;
+    private String name;
 
 }

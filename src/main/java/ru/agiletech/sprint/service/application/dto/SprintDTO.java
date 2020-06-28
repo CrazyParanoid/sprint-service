@@ -1,5 +1,6 @@
-package ru.agiletech.sprint.service.application;
+package ru.agiletech.sprint.service.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -16,37 +17,38 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(description = "Представление модели спринта")
 public class SprintDTO extends RepresentationModel<SprintDTO> {
 
     @NotEmpty(message = "Отсутствует наименование спринта")
     @ApiModelProperty(required = true, value = "Наименование")
-    private String      name;
+    private String name;
 
     @NotEmpty(message = "Отсутствует цель спринта")
     @ApiModelProperty(position = 1, required = true, value = "Цель")
-    private String      goal;
+    private String goal;
 
     @NotEmpty(message = "Отсутствует ключ проекта")
     @ApiModelProperty(position = 2, required = true, value = "Ключ проекта")
-    private String      projectKey;
+    private String projectKey;
 
     @ApiModelProperty(position = 3, value = "Идентификатор", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    private String      id;
+    private String id;
 
     @ApiModelProperty(position = 4, value = "Статус", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    private String      status;
+    private String status;
 
     @ApiModelProperty(position = 5, value = "Список задач в спринте", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     private Set<String> tasks;
 
     @ApiModelProperty(position = 6, value = "Количество дней в спринте", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    private long        sprintDays;
+    private long sprintDays;
 
     @ApiModelProperty(position = 7, value = "Дата начала спринта", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    private LocalDate   startDate;
+    private LocalDate startDate;
 
     @ApiModelProperty(position = 8, value = "Дата окончания спринта", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
-    private LocalDate   endDate;
+    private LocalDate endDate;
 
 }

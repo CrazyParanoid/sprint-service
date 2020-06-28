@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableMongoRepositories("ru.agiletech.sprint.service.infrastructure.persistence")
+@EnableMongoRepositories("ru.agiletech.sprint.service.infrastructure")
 public class PersistenceConfig {
 
     @Bean

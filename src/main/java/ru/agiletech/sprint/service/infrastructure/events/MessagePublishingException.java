@@ -1,4 +1,4 @@
-package ru.agiletech.sprint.service.infrastructure.messaging;
+package ru.agiletech.sprint.service.infrastructure.events;
 
 public class MessagePublishingException extends RuntimeException{
 

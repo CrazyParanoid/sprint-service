@@ -21,6 +21,18 @@ spring:
       database: ${DB_NAME}
       uri: ${DB_URI}
 
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI}
+
+event:
+  publisher:
+    poolSize: 1
+    delay: 3000
+
 management:
   endpoints:
     web:

@@ -16,13 +16,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SprintRepositoryImpl implements SprintRepository {
 
-    private final SprintDAO sprintDAO;
+    private final SprintMongoDbRepository sprintMongoDbRepository;
 
     @Override
     public void save(Sprint sprint) {
         try {
-            sprintDAO.save(sprint);
-
+            sprintMongoDbRepository.save(sprint);
         } catch (MongoException ex){
             log.error(ex.getMessage());
             throw new RepositoryAccessException(ex.getMessage(), ex);
@@ -32,9 +31,8 @@ public class SprintRepositoryImpl implements SprintRepository {
     @Override
     public Sprint sprintOfId(SprintId sprintId) {
         try {
-            return sprintDAO.findBySprintId(sprintId)
+            return sprintMongoDbRepository.findBySprintId(sprintId)
                     .orElseThrow(() -> new SprintNotFoundException("Sprint is not found"));
-
         } catch (MongoException ex){
             log.error(ex.getMessage());
             throw new RepositoryAccessException(ex.getMessage(), ex);
@@ -44,8 +42,7 @@ public class SprintRepositoryImpl implements SprintRepository {
     @Override
     public Set<Sprint> allSprints() {
         try {
-            return new HashSet<>(sprintDAO.findAll());
-
+            return new HashSet<>(sprintMongoDbRepository.findAll());
         } catch (MongoException ex){
             log.error(ex.getMessage());
             throw new RepositoryAccessException(ex.getMessage(), ex);

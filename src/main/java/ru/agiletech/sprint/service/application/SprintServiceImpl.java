@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.agiletech.sprint.service.application.dto.SprintDTO;
 import ru.agiletech.sprint.service.domain.*;
 import ru.agiletech.sprint.service.domain.task.TaskId;
 
@@ -18,9 +19,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SprintServiceImpl implements SprintService{
 
-    private final DomainEventPublisher<SprintScheduled>     sprintScheduledEventPublisher;
-    private final SprintRepository                          sprintRepository;
-    private final SprintAssembler                           sprintAssembler;
+    private final DomainEventPublisher<SprintScheduled> sprintScheduledEventPublisher;
+    private final SprintRepository sprintRepository;
+    private final SprintAssembler sprintAssembler;
 
     @Override
     @Transactional
@@ -31,7 +32,6 @@ public class SprintServiceImpl implements SprintService{
                 sprintDTO.getProjectKey());
 
         String id = sprint.sprintId();
-
         log.info("Sprint with id {} has been created", id);
         sprintRepository.save(sprint);
 
@@ -41,26 +41,22 @@ public class SprintServiceImpl implements SprintService{
 
     @Override
     @Transactional
-    public void startSprint(LocalDate startDate,
-                            LocalDate endDate,
-                            String    id) {
-        log.info("Start sprint with id{}", id);
-
-        SprintId sprintId = SprintId.identifySprint(id);
+    public void startSprint(String rawSprintId, LocalDate startDate, LocalDate endDate) {
+        log.info("Start sprint with id{}", rawSprintId);
+        SprintId sprintId = SprintId.identifySprint(rawSprintId);
         Sprint sprint = sprintRepository.sprintOfId(sprintId);
 
         sprint.start(startDate, endDate);
-        log.info("Sprint with id{} has been started", id);
+        log.info("Sprint with id{} has been started", rawSprintId);
 
         sprintRepository.save(sprint);
-        log.info("Sprint with id {} has been saved", id);
+        log.info("Sprint with id {} has been saved", rawSprintId);
     }
 
     @Override
     @Transactional
     public void completeSprint(String id) {
         log.info("Complete sprint with id{}", id);
-
         SprintId sprintId = SprintId.identifySprint(id);
         Sprint sprint = sprintRepository.sprintOfId(sprintId);
 
@@ -72,20 +68,15 @@ public class SprintServiceImpl implements SprintService{
 
     @Override
     @Transactional
-    public void scheduleSprint(String   rawSprintId,
-                               String   rawTaskId) {
+    public void scheduleSprint(String rawSprintId, String rawTaskId) {
         log.info("Schedule sprint with id{}", rawSprintId);
-
         SprintId sprintId = SprintId.identifySprint(rawSprintId);
         Sprint sprint = sprintRepository.sprintOfId(sprintId);
 
-        TaskId taskId = TaskId.identifyTaskFrom(rawTaskId);
-
-        SprintScheduled event = sprint.schedule(taskId);
+        SprintScheduled event = sprint.schedule(rawTaskId);
         sprintScheduledEventPublisher.publish(Collections.singletonList(event));
 
         log.info("Sprint with id{} has been scheduled", sprint.sprintId());
-
         sprintRepository.save(sprint);
     }
 
@@ -95,7 +86,6 @@ public class SprintServiceImpl implements SprintService{
 
         SprintId sprintId = SprintId.identifySprint(id);
         Sprint sprint = sprintRepository.sprintOfId(sprintId);
-
         log.info("Sprint with id{} has been found", id);
 
         return sprintAssembler.writeDTO(sprint);
@@ -109,7 +99,6 @@ public class SprintServiceImpl implements SprintService{
         log.info("All created sprints has been found");
 
         Set<SprintDTO> sprintDTOS = new HashSet<>();
-
         if(CollectionUtils.isNotEmpty(sprints))
             sprints.forEach(sprint -> sprintDTOS.add(sprintAssembler.writeDTO(sprint)));
 

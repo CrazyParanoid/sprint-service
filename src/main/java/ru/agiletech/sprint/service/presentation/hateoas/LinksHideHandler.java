@@ -16,20 +16,15 @@ public class LinksHideHandler implements ModelPropertyBuilderPlugin {
     @Override
     public void apply(ModelPropertyContext context) {
         if (context.getBeanPropertyDefinition().isPresent()) {
-
             BeanPropertyDefinition beanPropertyDefinition = context.getBeanPropertyDefinition().get();
             AnnotatedField annotatedField = beanPropertyDefinition.getField();
-
             if (null != annotatedField) {
                 Field field = (Field) annotatedField.getMember();
-
                 if (field != null)
                     hideLinksField(context, field);
             }
-
         } else if (context.getAnnotatedElement().isPresent()
                 && context.getAnnotatedElement().get() instanceof Field) {
-
             Field field = (Field) context.getAnnotatedElement().get();
             hideLinksField(context, field);
         }
@@ -40,11 +35,9 @@ public class LinksHideHandler implements ModelPropertyBuilderPlugin {
         return true;
     }
 
-    private void hideLinksField(final ModelPropertyContext  context,
-                                final Field                 field) {
+    private void hideLinksField(ModelPropertyContext context, Field field) {
         if (RepresentationModel.class.equals(field.getDeclaringClass())
                 && field.getName().contains("links")) {
-
             context.getBuilder().isHidden(true);
         }
     }

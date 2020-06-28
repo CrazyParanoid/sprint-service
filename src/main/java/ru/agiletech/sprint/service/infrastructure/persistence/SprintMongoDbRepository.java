@@ -6,7 +6,7 @@ import ru.agiletech.sprint.service.domain.SprintId;
 
 import java.util.Optional;
 
-public interface SprintDAO extends MongoRepository<Sprint, String> {
+public interface SprintMongoDbRepository extends MongoRepository<Sprint, String>{
 
     Optional<Sprint> findBySprintId(SprintId id);
 

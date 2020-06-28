@@ -12,10 +12,10 @@ public class SprintScheduled extends DomainEvent {
     private SprintId sprintId;
     private TaskId taskId;
 
-    public SprintScheduled(Date     occurredOn,
-                           String   name,
+    public SprintScheduled(Date occurredOn,
+                           String name,
                            SprintId sprintId,
-                           TaskId   taskId) {
+                           TaskId taskId) {
         super(occurredOn, name);
 
         this.sprintId = sprintId;

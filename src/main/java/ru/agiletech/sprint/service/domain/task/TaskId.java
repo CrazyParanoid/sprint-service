@@ -12,7 +12,6 @@ import java.util.Objects;
 @Setter(value = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TaskId implements ValueObject {
-
     private String id;
 
     public static TaskId identifyTaskFrom(String id){
@@ -23,14 +22,11 @@ public class TaskId implements ValueObject {
     public boolean equals(Object object) {
         if (this == object)
             return true;
-        if (object == null
-                || getClass() != object.getClass())
+        if (object == null || getClass() != object.getClass())
             return false;
 
         TaskId taskId = (TaskId) object;
-
-        return Objects.equals(id,
-                taskId.id);
+        return Objects.equals(id, taskId.id);
     }
 
     @Override

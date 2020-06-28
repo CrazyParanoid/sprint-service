@@ -1,5 +1,7 @@
 package ru.agiletech.sprint.service.application;
 
+import ru.agiletech.sprint.service.application.dto.SprintDTO;
+
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -7,16 +9,13 @@ public interface SprintService {
 
     SprintDTO createSprint(SprintDTO sprintDTO);
 
-    void startSprint(LocalDate startDate,
-                     LocalDate endDate,
-                     String    id);
+    void startSprint(String rawSprintId, LocalDate startDate, LocalDate endDate);
 
-    void completeSprint(String  id);
+    void completeSprint(String rawSprintId);
 
-    void scheduleSprint(String id,
-                        String rawTaskId);
+    void scheduleSprint(String rawSprintId, String rawTaskId);
 
-    SprintDTO searchSprintById(String id);
+    SprintDTO searchSprintById(String rawSprintId);
 
     Set<SprintDTO> searchAllSprints();
 

@@ -16,7 +16,6 @@ public class SprintId implements ValueObject {
 
     static SprintId identifySprint(){
         String id = UUID.randomUUID().toString();
-
         return new SprintId(id);
     }
 
@@ -28,13 +27,11 @@ public class SprintId implements ValueObject {
     public boolean equals(Object object) {
         if (this == object)
             return true;
-        if (object == null
-                || getClass() != object.getClass())
+        if (object == null || getClass() != object.getClass())
             return false;
-
         SprintId sprintId = (SprintId) object;
-        return Objects.equals(id,
-                sprintId.id);
+
+        return Objects.equals(id, sprintId.id);
     }
 
     @Override

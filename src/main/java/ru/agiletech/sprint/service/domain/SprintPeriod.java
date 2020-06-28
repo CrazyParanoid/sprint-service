@@ -24,25 +24,21 @@ public class SprintPeriod implements ValueObject {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    static SprintPeriod between(LocalDate startDate,
-                                LocalDate endDate){
+    static SprintPeriod between(LocalDate startDate, LocalDate endDate){
         return new SprintPeriod(startDate,
                 endDate);
     }
 
     public long calculateDays(){
         Period period = Period.between(this.startDate, this.endDate);
-
         return period.getDays();
     }
 
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (object == null
-                || getClass() != object.getClass())
+        if (object == null || getClass() != object.getClass())
             return false;
-
         SprintPeriod sprintPeriod = (SprintPeriod) object;
 
         return Objects.equals(startDate, sprintPeriod.startDate) &&

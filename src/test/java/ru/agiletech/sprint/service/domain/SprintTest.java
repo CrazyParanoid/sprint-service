@@ -8,7 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.agiletech.sprint.service.Application;
-import ru.agiletech.sprint.service.domain.task.TaskId;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -20,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {Application.class})
-public class TestSprint {
+public class SprintTest {
 
      private Sprint sprint;
 
@@ -37,12 +36,9 @@ public class TestSprint {
     @Test
     public void testScheduleSprint(){
         this.sprint = createSprint();
-
         String rawTaskId = UUID.randomUUID().toString();
 
-        TaskId taskId = TaskId.identifyTaskFrom(rawTaskId);
-        sprint.schedule(taskId);
-
+        sprint.schedule(rawTaskId);
         SprintSnapshot snapshot = sprint.makeSnapshot();
 
         assertNotNull(snapshot.getTasks());
@@ -51,17 +47,12 @@ public class TestSprint {
     @Test
     public void testStartSprint(){
         this.sprint = createSprint();
-
         String rawTaskId = UUID.randomUUID().toString();
-
-        TaskId taskId = TaskId.identifyTaskFrom(rawTaskId);
-        sprint.schedule(taskId);
+        sprint.schedule(rawTaskId);
 
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusWeeks(2);
-
         sprint.start(startDate, endDate);
-
         SprintSnapshot snapshot = sprint.makeSnapshot();
 
         assertNotNull(snapshot.getStatus());
